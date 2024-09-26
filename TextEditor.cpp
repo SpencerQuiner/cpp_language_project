@@ -10,7 +10,7 @@ namespace std_filesystem = std::filesystem;
 
 TextEditor::TextEditor(){
     //populates the TextEditor vector
-    string directoryPath = "./files";
+    string directoryPath = "./TextEditorFiles";
     loadTextFiles(directoryPath);
 }
 
