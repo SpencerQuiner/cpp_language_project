@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-//main function to run the program.
+//main function to run the program. Other parts of the code are stored in separate files. 
 int main(){
     TextEditor editor;
     editor.startEditor();

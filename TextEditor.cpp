@@ -1,6 +1,6 @@
+//this section at the top lists out the libraries used in the code.
 #include <iostream>
 #include <string>
-#include <ctime>
 #include <fstream>
 #include <vector>
 #include <filesystem>
@@ -8,12 +8,13 @@
 using namespace std;
 namespace std_filesystem = std::filesystem;
 
+//Definition of the TextEditor Constructor
 TextEditor::TextEditor(){
     //populates the TextEditor vector
     string directoryPath = "./TextEditorFiles";
     loadTextFiles(directoryPath);
 }
-
+//The methods for the TextEditor class are defined below
 void TextEditor::startEditor() {
     int selection = 0;
     //main menu for the program.
@@ -54,13 +55,13 @@ void TextEditor::openNewFile() {
     string filepath = directory + "/" + fileName + ".txt";
     ofstream newFile(filepath);
     textFiles.push_back(fileName +".txt");
-    TextFile txtfile(fileName);//call TextFile constructor.
+    TextFile currentFile(fileName);//call TextFile constructor.
     //call editFile function on the new file.
-    //newFile.editFile(fileName);    
+    currentFile.editFile(filepath);    
 }
-
+//this method populated the vector that is displayed when the displayFiles function is called.
 void TextEditor::loadTextFiles(const string &directorypath){
-    
+    textFiles.clear();
     for (const std_filesystem::directory_entry& entry : std_filesystem::directory_iterator(directorypath))
     {
         if(entry.is_regular_file() && entry.path().extension() == ".txt"){
@@ -70,6 +71,8 @@ void TextEditor::loadTextFiles(const string &directorypath){
 }
 
 void TextEditor::displayFiles(){
+    string directoryPath = "./TextEditorFiles";
+    loadTextFiles(directoryPath);
     cout << "Displaying files.\n";
     for(const string &fileName : textFiles){
         cout << fileName << endl;
@@ -85,9 +88,12 @@ void TextEditor::openTextFile(){
     string directory = "./TextEditorFiles";
     cout << "Enter filename to open. ";
     cin >> fileName;
+    string fullpath;
+    TextFile currentFile(fileName);
 
     if(fileExt(fileName)== true) {
-        ifstream file(directory+"/"+fileName);
+        fullpath = directory+"/"+fileName;
+        ifstream file(fullpath, ios::in);
         cout << fileName << endl;
         string line;
 
@@ -95,8 +101,8 @@ void TextEditor::openTextFile(){
             cout << line << endl;
             }
         } else {
-            fileName = fileName + ".txt";
-            ifstream file(directory+"/"+fileName);
+            fullpath = directory+"/"+fileName + ".txt";
+            ifstream file(fullpath, ios::in);
             cout << fileName << endl;
             string line;
 
@@ -104,4 +110,5 @@ void TextEditor::openTextFile(){
             cout << line << endl;
             }
         }
+    currentFile.fileMenu(fullpath);
     }

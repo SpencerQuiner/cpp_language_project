@@ -1,0 +1,2 @@
+this is testing the edit function of the text editor this will only add to the end of the file.
+once again testing the edit function.
